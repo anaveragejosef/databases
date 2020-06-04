@@ -13,7 +13,6 @@ module.exports = {
       });
   },
   post: (req, res) => {
-    // console.log('REQ ---', req);
     models.users.create(req.body, (err, results) => {
       if (err) {
         res.status(404).send(err);
@@ -24,7 +23,8 @@ module.exports = {
   }
 };
 
-// db.query(‘SELECT * from messages’, (req, (err, result) => { if (err) res.status(404).send(err) else (res.status(200).send(result)}) */
-
-
- //[{id: 1, username: josef}, ...] results[x].username
+ // Testing
+ /* curl --header "Content-Type: application/json" \
+ --request POST \
+ --data '{"username":"Valjean","roomname":"main", "text":"hello world"}' \
+ http://localhost:3000/classes/messages */

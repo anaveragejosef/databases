@@ -9,7 +9,7 @@ var FormView = {
   handleSubmit: function(event) {
     // Stop the browser from submitting the form
     event.preventDefault();
-    
+
 
     var message = {
       username: App.username,
@@ -17,7 +17,7 @@ var FormView = {
       roomname: Rooms.selected || 'lobby'
     };
 
-    Parse.create(message, (data) => {
+    Parse.createMessage(message, (data) => {
       _.extend(message, data);
       Messages.add(message, MessagesView.render);
     });
