@@ -11,3 +11,5 @@ var connection = mysql.createConnection({
   password : 'SQL47!aqs.$$.',
   database : 'chat'
 });
+
+module.exports = connection;
