@@ -11,7 +11,7 @@ module.exports = {
     });
   }, // a function which handles a get request for all messages
   post: (req, res) => {
-    models.messages.create(req.params, (err, results) => {
+    models.messages.create(req.body, (err, results) => {
       if (err) {
         res.status(404).json(err);
       } else {

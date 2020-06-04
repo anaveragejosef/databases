@@ -9,7 +9,7 @@ module.exports = {
       } else {
         // console.log('Fields: ', fields);
         // console.log('Results: ', results);
-        callback(null, results.toString());
+        callback(null, results);
       }
     });
   },
@@ -21,7 +21,7 @@ module.exports = {
       } else {
         // console.log('Fields: ', fields);
         // console.log('Results: ', results);
-        callback(null, results.toString());
+        callback(null, results);
       }
     });
   }

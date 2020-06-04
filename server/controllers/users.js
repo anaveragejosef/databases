@@ -13,7 +13,7 @@ module.exports = {
       });
   },
   post: (req, res) => {
-    console.log('REQ ---', req);
+    // console.log('REQ ---', req);
     models.users.create(req.body, (err, results) => {
       if (err) {
         res.status(404).send(err);
