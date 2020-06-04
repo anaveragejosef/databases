@@ -1,5 +1,8 @@
 ### node etc ###
 
+# Server Connection
+server/db/index.js
+
 # Logs
 logs
 *.log

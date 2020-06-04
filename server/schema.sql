@@ -15,9 +15,9 @@ CREATE TABLE users (
 CREATE TABLE messages (
   /* Describe your table here.*/
   id integer auto_increment primary key,
-  messages varchar(255),
-  users_id integer,
-  rooms_id integer,
+  text varchar(255),
+  user_id integer,
+  room_id integer,
   foreign key(users_id) references users(id),
   foreign key(rooms_id) references rooms(id)
 );
