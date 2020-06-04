@@ -88,4 +88,50 @@ describe('Persistent Node Chat Server', function() {
       });
     });
   });
+
+  // New Tests
+  it('Should insert two new users to the DB', function(done) {
+    request({
+      method: 'POST',
+      uri: 'http://127.0.0.1:3000/classes/users',
+      json: { username: 'Steve' }
+    }, function () {
+      request({
+        method: 'POST',
+        uri: 'http://127.0.0.1:3000/classes/users',
+        json: { username: 'Bill' }
+      }, function () {
+        var queryString = 'SELECT * FROM users';
+        var queryArgs = [];
+        dbConnection.query(queryString, queryArgs, function(err, results) {
+          expect(results[results.length - 3].username).to.equal('Steve');
+          expect(results[results.length - 2].username).to.equal('Bill');
+
+          done();
+        });
+      });
+    });
+  });
+
+  it('Should not insert duplicates users to the DB', function(done) {
+    request({
+      method: 'POST',
+      uri: 'http://127.0.0.1:3000/classes/users',
+      json: { username: 'Timmy' }
+    }, function () {
+      request({
+        method: 'POST',
+        uri: 'http://127.0.0.1:3000/classes/users',
+        json: { username: 'Timmy' }
+      }, function () {
+        var queryString = 'SELECT * FROM users WHERE username = "Timmy"';
+        var queryArgs = [];
+        dbConnection.query(queryString, queryArgs, function(err, results) {
+          expect(results.length).to.equal(1);
+
+          done();
+        });
+      });
+    });
+  });
 });
