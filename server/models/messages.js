@@ -1,28 +1,35 @@
 var db = require('../db');
 
 module.exports = {
-  getAll: function (callback) {
-    db.connection.query('SELECT * FROM messages', function(error, results, fields) {
+  getAll: callback => {
+    console.log('----- DB CONNECTION ------', db.connection);
+    db.connection.query('SELECT * FROM messages', (error, results, fields) => {
       if (error) {
         callback(error);
       } else {
-        callback(null, results);
+        // console.log('Fields: ', fields);
+        // console.log('Results: ', results);
+        callback(null, results.toString());
       }
     });
   }, // a function which produces all the messages
-  create: function (obj, callback) {
-    db.connection.query('SELECT * FROM users WHERE username = ?', [obj.username], function(error, results, fields) {
+  create: (obj, callback) => {
+    console.log('create obj', obj);
+    db.connection.query('SELECT * FROM users WHERE username = ?', [obj.username], (error, results, fields) => {
       if (error) {
         callback(error);
       } else {
-        db.connection.query('INSERT INTO messages (text, roomname, user_id) VALUES (?, ?, ?)', [obj.text, obj.roomname, results[0].id]), function(error, results, fields) {
+        // console.log('RESULTS OUTPUT --------', results);
+        db.connection.query('INSERT INTO messages (text, roomname, user_id) VALUES (?, ?, ?)', [obj.text, obj.roomname, results[0].id]), (error, results, fields) => {
           if (error) {
             callback(error);
           } else {
-            callback(null, results);
+            // console.log('Fields: ', fields);
+            // console.log('Results: ', results);
+            callback(null, results.toString());
           }
         }
       }
-    }
+    });
   } // a function which can be used to insert a message into the database
 };
