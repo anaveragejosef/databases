@@ -90,7 +90,6 @@ describe('Persistent Node Chat Server', function() {
   });
 
   // New Tests
-  // Run this twice -- idk why
   it('Should insert two new users to the DB', function(done) {
     request({
       method: 'POST',

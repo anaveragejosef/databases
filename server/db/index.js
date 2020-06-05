@@ -1,4 +1,5 @@
-var mysql = require('mysql');
+var mysql = require('mysql2');
+var Sequelize = require('sequelize');
 
 // Create a database connection and export it from this file.
 // You will need to connect with the user "root", no password,
@@ -7,15 +8,25 @@ var mysql = require('mysql');
 // module.exports = {
 //   connection:
 // }
-
-module.exports.connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : 'SQL47!aqs.$$.',
-  database : 'chat'
+var db = new Sequelize('chat', 'root', 'SQL47!aqs.$$.', {
+  host: 'localhost',
+  dialect: 'mysql'
 });
 
+module.exports.connection = {
+  User: db.define('Users', {
+    username: Sequelize.STRING
+  }, {
+    timestamps: false
+  }),
+  Message: db.define('Messages', {
+    text: Sequelize.STRING,
+    roomname: Sequelize.STRING,
+    userid: Sequelize.INTEGER
+  }, {
+    timestamps: false
+  })
+}
 
-// connection.connect();
-
-// module.exports = connection;
+module.exports.connection.User.sync();
+module.exports.connection.Message.sync();

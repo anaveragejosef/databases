@@ -2,33 +2,31 @@ var db = require('../db');
 
 module.exports = {
   getAll: callback => {
-    // db query
-    db.connection.query('SELECT * FROM users', (error, results, fields) => {
-      if (error) {
-        callback(error);
-      } else {
-        callback(null, results);
-      }
-    });
+    db.connection.User.findAll()
+      .then(users => {
+        callback(null, users)
+      })
+      .catch(error => {
+        callback(error)
+      })
   },
   create: (obj, callback) => {
-    db.connection.query('SELECT * FROM users WHERE username = ?', [obj.username], (error, results, fields) => {
-      if (error) {
-        callback(error)
-      } else {
-        // check if post is a duplicate
-        if (results.length === 0) {
-          db.connection.query('INSERT INTO users (username) VALUES(?)', [obj.username], (error, results, fields) => {
-            if (error) {
-              callback(error);
-            } else {
-              callback(null, results);
-            }
-          });
+    db.connection.User.findAll({where: {username: obj.username}})
+      .then(result => {
+        if (result.length === 0) {
+          return db.connection.User.create({username: obj.username})
         } else {
-          callback(null, results);
+          callback(null, result);
         }
-      }
-    })
+      })
+      .then(createdUser => {
+        if (!createdUser) {
+          return;
+        }
+        callback(null, createdUser);
+      })
+      .catch(err => {
+        callback(err);
+      });
   }
 };

@@ -2,27 +2,28 @@ var db = require('../db');
 
 module.exports = {
   getAll: callback => {
-    db.connection.query('SELECT * FROM messages', (error, results, fields) => {
-      if (error) {
-        callback(error);
-      } else {
-        callback(null, results);
-      }
-    });
+    db.connection.Message.findAll()
+      .then(messages => {
+        callback(null, messages)
+      })
+      .catch(error => {
+        callback(error)
+      })
   }, // a function which produces all the messages
   create: (obj, callback) => {
-    db.connection.query('SELECT * FROM users WHERE username = ?', [obj.username], (error, results, fields) => {
-      if (error) {
-        callback(error);
-      } else {
-        db.connection.query('INSERT INTO messages (text, roomname, user_id) VALUES(?, ?, ?)', [obj.text, obj.roomname, results[0].id], (error, results, fields) => {
-          if (error) {
-            callback(error);
-          } else {
-            callback(null, results);
-          }
+    db.connection.User.findAll({where: {username: obj.username}})
+      .then(result => {
+        return db.connection.Message.create({
+          userid: result[0].id,
+          text: obj.text,
+          roomname: obj.roomname
         });
-      }
-    });
-  } // a function which can be used to insert a message into the database
+      })
+      .then(results => {
+        callback(null, results);
+      })
+      .catch(err => {
+        callback(err)
+      });
+  }
 };
