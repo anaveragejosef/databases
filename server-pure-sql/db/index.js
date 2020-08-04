@@ -11,7 +11,7 @@ var mysql = require('mysql');
 module.exports.connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
-  password : 'SQL47!aqs.$$.',
+  password : '',
   database : 'chat'
 });
 
