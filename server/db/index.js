@@ -8,7 +8,7 @@ var Sequelize = require('sequelize');
 // module.exports = {
 //   connection:
 // }
-var db = new Sequelize('chat', 'root', 'SQL47!aqs.$$.', {
+var db = new Sequelize('chat', 'root', '', {
   host: 'localhost',
   dialect: 'mysql'
 });
